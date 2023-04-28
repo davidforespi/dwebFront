@@ -26,22 +26,15 @@ const Login = () => {
       };
       setLoading(true);
       await axios
-        .post("http://localhost:4000/login", Usuario)
+        .post("http://localhost:5000/api/login", Usuario)
         .then((res) => {
           const { data } = res;
           setMensaje(data.mensaje);
-          setTimeout(() => {
-            setMensaje("");
-            setLoading(false);
-            navigate(`/welcome/${data?.user.id}`);
-          }, 1500);
+          navigate(`/menu/${data?.user.id}`)
         })
         .catch((error) => {
           console.error(error);
-          setMensaje("Correo u contraseña incorrecta");
-          setTimeout(() => {
-            setMensaje("");
-          }, 1500);
+          setMensaje("Correo u contraseña incorrecta")
         });
       setInputs({ correo: "", contraseña: "" });
       setLoading(false);

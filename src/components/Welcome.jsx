@@ -12,7 +12,7 @@ const Welcome = () => {
   const {id} = useParams();
 
  useEffect(() =>{
-  axios.get(`http://localhost:4000/user/${id}`)
+  axios.get(`http://localhost:5000/api/user/${id}`)
   .then(({data}) => setName(data.nombre))
   .catch((error) => console.error(error));
   
@@ -23,7 +23,7 @@ const Welcome = () => {
       <h3>
         {name ? `Felicitaciones ${name}` : `Que haras?`}
       </h3>
-      <h2>{name ? `Te pudiste logear` : `disfruta` }</h2>
+      <h2>{name ? `Te pudiste logear` : `Pillin` }</h2>
 
       <div className={styles.buttons}>
         <button onClick ={() => navigate("/login") }>Login</button>
