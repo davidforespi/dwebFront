@@ -17,10 +17,10 @@ export const ItemCart = ({ item }) => {
           <p>{item.name}</p>
           <div className={styles.buttons}>
             <button onClick={() => editItemToCart(item._id, "add", amount)}>
-              AGREGAR
+              Agregar
             </button>
             <button onClick={() => editItemToCart(item._id, "del", amount)}>
-              SACAR
+              Sacar
             </button>
           </div>
         </div>

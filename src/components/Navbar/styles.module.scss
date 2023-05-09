@@ -1,0 +1,72 @@
+.navbar {
+    background-color: #9a539c;
+    color: white;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1;
+    height: 80px;
+    margin-bottom: 25px;
+    flex-wrap: nowrap;
+    
+  }
+  
+  .navtitle {
+    font-size: 3rem;
+    font-weight: bold;
+    letter-spacing: 4px;
+    text-align: center;
+    color: white;
+    flex: 1;
+    text-decoration: none;
+    margin-right: 10px;
+
+    &:hover{
+      background-color: #69539c;
+    }
+
+  }
+
+  
+  .logout {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    margin-right: 15px;
+
+    &:hover{
+      background-color: #69539c;
+    }
+
+  }
+
+  .aboutus {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    margin-right: 10px;
+
+    &:hover{
+      background-color: #69539c;
+    }
+  }
+
+  .p {
+    color: white;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin: 0;
+    margin-left: 15px;
+
+  }
+  

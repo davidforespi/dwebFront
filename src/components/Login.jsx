@@ -1,15 +1,18 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams} from "react-router-dom";
+
 
 import styles from "./styles.module.scss";
 
-const Login = () => {
+const Login =   () => {
   const [inputs, setInputs] = useState({ correo: "", contraseña: "" });
   const [mensaje, setMensaje] = useState();
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  
 
   const { correo, contraseña } = inputs;
 
@@ -17,6 +20,7 @@ const Login = () => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
+  
   const onSubmit = async (e) => {
     e.preventDefault();
     if (correo !== "" && contraseña !== "") {
@@ -30,7 +34,8 @@ const Login = () => {
         .then((res) => {
           const { data } = res;
           setMensaje(data.mensaje);
-          navigate(`/menu/${data?.user.id}`)
+          axios.delete("http://localhost:5000/api/products-emptyCart");
+          navigate(`/menu/${data?.user.id}`);
         })
         .catch((error) => {
           console.error(error);
@@ -101,7 +106,7 @@ const Login = () => {
           </button>
           <p>
             Aun no tienes cuenta?{" "}
-            <b onClick={() => navigate("/")}>Registrate!</b>
+            <b onClick={() => navigate("/register")}>Registrate!</b>
           </p>
         </form>
       </div>

@@ -18,7 +18,7 @@
   h2 {
     font-size: 30px;
     font-weight: bolder;
-    color: #6358dc;
+    color: #2f2f2f;
   }
 
   form {
@@ -69,13 +69,13 @@
       font-weight: 700;
       font-size: 16px;
       color: white;
-      background-color: #93BB50;
+      background-color: orange;
       border-radius: 8px;
       transition-duration: 0.3s;
     }
 
     button:hover {
-      background-color: #A0EC22;
+      background-color: orange;
     }
 
     p {
@@ -84,7 +84,7 @@
 
       b {
         cursor: pointer;
-        color: #6358dc;
+        color: orange;
       }
 
       b:hover {

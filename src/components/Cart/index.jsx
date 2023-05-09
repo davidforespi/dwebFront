@@ -14,7 +14,7 @@ const Cart = () => {
 
   /* Cada vez que se modifica el carrito, actualizamos la cantidad de productos */
   useEffect(() => {
-    
+
     setProductsLength(
       cartItems?.reduce((previous, current) => previous + current.amount, 0)
     );
@@ -86,9 +86,22 @@ const Cart = () => {
                 <ItemCart key={i} item={item} />
               ))}
             </div>
+
           )}
 
-          <h2 className={styles.total}>Total: ${total}</h2>
+          <h2 className={styles.total}>
+            Total: ${total}
+            {total === 0 ? (
+               <div className={styles.buttons}><button>Agrega algun producto</button> </div> 
+            ) : (
+              <div className={styles.buttons}>
+                <button>Realizar pago aquí</button>
+              </div>
+            )}
+          </h2>
+
+
+
         </div>
       )}
     </div>

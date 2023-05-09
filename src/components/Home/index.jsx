@@ -1,28 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from './styles.module.scss'
 import Cart from  '../Cart';
 import Products from '../Products'
-import { CartProvider } from "../../Context/CartContext";
-import axios from 'axios'
-import { useNavigate, useParams} from "react-router-dom";
+import  {CartProvider} from "../../Context/CartContext";
+import Navbar from "../Navbar/navbar"
+const Home = () => { 
 
-const Home = () => {
-  const [name, setName] = useState();
-
-  const navigate = useNavigate();
-
-  const {id} = useParams();
-
- useEffect(() =>{
-  axios.get(`http://localhost:5000/api/user/${id}`)
-  .then(({data}) => setName(data.nombre))
-  .catch((error) => console.error(error));
-  
- }, [id]);
-  
   return (
     <CartProvider>
     <div className={styles.home}>
+    
+    <Navbar/>
+    <h2 className={styles.h2}>Elige lo que mas desees!</h2>
+    <h1></h1>
         <Cart />
         <Products />
     </div>
@@ -30,4 +20,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home;

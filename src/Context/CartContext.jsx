@@ -1,7 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
+import {useParams} from 'react-router-dom'
 
-/* Creamos el context, se le puede pasar un valor inicial */
+
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
@@ -9,32 +10,45 @@ export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [products, setProducts] = useState([]);
 
+  const userId = useParams().id.toString();
+
+ 
   const getProducts = async () => {
     await axios
       .get("http://localhost:5000/api/products")
       .then(({ data }) => setProducts(data.products));
   };
 
-  const getProductsCart = async () => {
-    return await axios
-      .get("http://localhost:5000/api/products-cart")
-      .then(({ data }) => setCartItems(data.productsCart))
-      .catch((error) => console.error(error));
-  };
+
+  const getUserCart = async () => {
+    return await axios.get(`http://localhost:5000/api/products-getUserCart/${userId}`)
+    .then(({data}) => setCartItems(data.userCart))
+    .catch((error) => console.error(error));
+
+  }
+
 
   useEffect(() => {
     getProducts();
-    getProductsCart();
+    getUserCart();
   }, []);
 
-  const addItemToCart = async (product) => {
+
+
+
+
+  const addItemToCart = async (product, userId) => {
     const { name, img, price } = product;
 
-    await axios.post("http://localhost:5000/api/products-cart", { name, img, price });
+
+    await axios.post(`http://localhost:5000/api/products-addCart/${userId}`, {name, img, price});
 
     getProducts();
-    getProductsCart();
+    getUserCart();
+
   };
+
+
 
   const editItemToCart = async (id, query, amount) => {
     if (query === "del" && amount === 1) {
@@ -50,13 +64,13 @@ export const CartProvider = ({ children }) => {
     }
 
     getProducts();
-    getProductsCart();
+    getUserCart();
   };
 
   return (
     /* Envolvemos el children con el provider y le pasamos un objeto con las propiedades que necesitamos por value */
     <CartContext.Provider
-      value={{ cartItems, products, addItemToCart, editItemToCart }}
+      value={{ cartItems, products, addItemToCart, editItemToCart, getUserCart}}
     >
       {children}
     </CartContext.Provider>
