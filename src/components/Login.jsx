@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate, useParams} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 import styles from "./styles.module.scss";
@@ -49,7 +49,7 @@ const Login =   () => {
   return (
     <>
       <div className={styles.formContainer}>
-        <h3>Bienvenido a la pagina</h3>
+        <h2>Bienvenido a la pagina</h2>
         <h2>De Inicio de Sesión!</h2>
         <form onSubmit={(e) => onSubmit(e)}>
           <div className={styles.inputContainer}>
@@ -107,6 +107,7 @@ const Login =   () => {
           <p>
             Aun no tienes cuenta?{" "}
             <b onClick={() => navigate("/register")}>Registrate!</b>
+            <p onClick={() => navigate('/recover')}>Recupera tu contraseña</p>
           </p>
         </form>
       </div>

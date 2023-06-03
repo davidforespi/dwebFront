@@ -8,7 +8,9 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [name, setName] = useState();
 
-  const { id } = useParams();
+  const {id}  = useParams();
+
+ 
 
 
   useEffect(() => {
@@ -30,6 +32,7 @@ const Navbar = () => {
         </div>
       </NavLink>
       <button className={styles.aboutus} onClick={() => navigate(`/aboutus/${id}`)}>About us</button>
+      <button className={styles.edit} onClick={() => navigate(`/editprofile/${id}`)}>Actualiza tu perfil</button>
       <button className={styles.logout} onClick={() => navigate('/')}>
         Log out
       </button>

@@ -2,16 +2,19 @@ import { useContext, useEffect, useState } from "react";
 import { ItemCart } from "../itemCart";
 import CartContext from "../../Context/CartContext";
 import styles from "./styles.module.scss";
-
+import { useNavigate, useParams } from "react-router-dom";
 const Cart = () => {
   /* Creamos 2 estados, uno para ver si el carrito esta abierto o no 
   y otro para obtener la cantidad de productos que tenemos en el carrito */
   const [cartOpen, setCartOpen] = useState(false);
   const [productsLength, setProductsLength] = useState(0);
-
+  const navigate = useNavigate();
   /* Traemos del context los productos del carrito */
   const { cartItems } = useContext(CartContext);
 
+  const {id}  = useParams();
+
+  
   /* Cada vez que se modifica el carrito, actualizamos la cantidad de productos */
   useEffect(() => {
 
@@ -95,13 +98,10 @@ const Cart = () => {
                <div className={styles.buttons}><button>Agrega algun producto</button> </div> 
             ) : (
               <div className={styles.buttons}>
-                <button>Realizar pago aquí</button>
+                <button onClick={() => navigate(`/pay/${id}?total=${total}`)}>Realizar pago aquí</button>
               </div>
             )}
           </h2>
-
-
-
         </div>
       )}
     </div>

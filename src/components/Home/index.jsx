@@ -9,7 +9,6 @@ const Home = () => {
   return (
     <CartProvider>
     <div className={styles.home}>
-    
     <Navbar/>
     <h2 className={styles.h2}>Elige lo que mas desees!</h2>
     <h1></h1>

@@ -78,18 +78,24 @@
       background-color: orange;
     }
 
-    p {
+    p { 
       text-align: center;
       font-size: 12px;
 
-      b {
-        cursor: pointer;
-        color: orange;
+      p{
+        color:orange;
+        cursor:pointer;
+        font-weight: bold;
       }
 
-      b:hover {
-        text-decoration: underline;
-      }
+      b {
+        cursor: pointer;
+          color: orange;
+        }
+
+        b:hover {
+          text-decoration: underline;
+        }
     }
   }
 }
@@ -143,4 +149,5 @@
       background-color: #4235d6;
     }
   }
+
 }

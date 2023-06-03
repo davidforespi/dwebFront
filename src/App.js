@@ -4,6 +4,10 @@ import Login from "./components/Login";
 import styles from "./App.module.scss"
 import Home from "./components/Home"
 import AboutUs from "./components/AboutUs/AboutUs";
+import Recover from "./components/Recover/Recover";
+import EditProfile from "./components/EditProfile/editProfile";
+import Pay from "./components/Pay/pay";
+
 const  App = () => {
   
   return <BrowserRouter>
@@ -13,7 +17,10 @@ const  App = () => {
       <Route path="/aboutus/:id" element={<AboutUs />} />
       <Route path="/menu/:id" element={<Home />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/recover" element={<Recover />} />    
       <Route path="/" element={<Login />} />
+      <Route path="/editProfile/:id" element={<EditProfile />} />
+      <Route path="/pay/:id" element={<Pay />} />
     </Routes>
 
   </div>
