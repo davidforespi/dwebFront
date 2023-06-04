@@ -17,6 +17,7 @@ const Welcome = () => {
   .catch((error) => console.error(error));
   
  }, [id]);
+ 
   return (
     <div className={styles.welcome}>
 

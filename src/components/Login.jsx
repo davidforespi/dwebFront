@@ -23,7 +23,7 @@ const Login =   () => {
   
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (correo !== "" && contraseña !== "") {
+    if (correo !== "" && contraseña !== "" && correo !== "admin@renala.com" && correo !== "admin1@renala.com") {
       const Usuario = {
         correo,
         contraseña,
@@ -35,7 +35,7 @@ const Login =   () => {
           const { data } = res;
           setMensaje(data.mensaje);
           axios.delete("http://localhost:5000/api/products-emptyCart");
-          navigate(`/menu/${data?.user.id}`);
+          navigate(`/inicio/${data?.user.id}`);
         })
         .catch((error) => {
           console.error(error);
@@ -43,6 +43,22 @@ const Login =   () => {
         });
       setInputs({ correo: "", contraseña: "" });
       setLoading(false);
+    }else if(correo !== "" && contraseña !== ""  || correo === "admin@renala.com" || correo !== "admin1@renala.com" ){
+      const Usuario ={
+        correo,
+        contraseña,
+      };
+      setLoading(true);
+      await axios.post("http://localhost:5000/api/adminLogin", Usuario)
+      .then((res) =>{
+        const {data} = res;
+        setMensaje(data.mensaje);
+        navigate(`/admin/${data?.user.id}`);
+      })
+      .catch((error) =>{ 
+        console.log(error);
+        setMensaje("Correo Incorrecto")
+      })
     }
   };
 

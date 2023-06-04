@@ -7,9 +7,13 @@ import AboutUs from "./components/AboutUs/AboutUs";
 import Recover from "./components/Recover/Recover";
 import EditProfile from "./components/EditProfile/editProfile";
 import Pay from "./components/Pay/pay";
+import Admin from "./components/loginAdmin/admin";
+import Inicio from './components/inicio/inicio';
 
 const  App = () => {
   
+
+
   return <BrowserRouter>
   
   <div className={styles.container}>
@@ -21,6 +25,9 @@ const  App = () => {
       <Route path="/" element={<Login />} />
       <Route path="/editProfile/:id" element={<EditProfile />} />
       <Route path="/pay/:id" element={<Pay />} />
+      <Route path="/admin/:id" element={<Admin />} />
+      <Route path="/inicio/:id" element={<Inicio/>} />
+  
     </Routes>
 
   </div>

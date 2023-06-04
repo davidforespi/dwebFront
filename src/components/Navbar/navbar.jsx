@@ -26,15 +26,20 @@ const Navbar = () => {
       <div>
         <p className={styles.p}>Bienvenido {name}</p>
       </div>
-      <NavLink className={styles.navtitle} to={`/menu/${id}`}>
+      <NavLink className={styles.navtitle} to={`/inicio/${id}`}>
         <div>
-          <span>Menu</span>
+          <span>Inicio</span>
         </div>
       </NavLink>
-      <button className={styles.aboutus} onClick={() => navigate(`/aboutus/${id}`)}>About us</button>
-      <button className={styles.edit} onClick={() => navigate(`/editprofile/${id}`)}>Actualiza tu perfil</button>
-      <button className={styles.logout} onClick={() => navigate('/')}>
-        Log out
+      <NavLink className={styles.navtitle} to={`/menu/${id}`}>
+        <div>
+          <span>Menú</span>
+        </div>
+      </NavLink>
+      <button className={styles.button} onClick={() => navigate(`/aboutus/${id}`)}>Sobre nosotros</button>
+      <button className={styles.button} onClick={() => navigate(`/editprofile/${id}`)}>Actualiza tu perfil</button>
+      <button className={styles.button} onClick={() => navigate('/')}>
+        Cerrar sesión
       </button>
     </nav>
   );

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import styles from './styles.module.scss';
 
 const EditProfile = () => {
   const [nombre, setNombre] = useState('');
@@ -9,6 +10,28 @@ const EditProfile = () => {
   const [mensaje, setMensaje] = useState('');
   const navigate = useNavigate();
   const { id } = useParams();
+  
+
+  const [name, setName] = useState('');
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/user/${id}`)
+      .then(({ data }) => {
+        if (data.nombre) {
+          setName(data.nombre);
+        } else {
+          navigate('/');
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        navigate('/');
+      });
+    });
+
+
+
 
   const handleNombreChange = (e) => {
     setNombre(e.target.value);
@@ -31,30 +54,30 @@ const EditProfile = () => {
       contraseñaConf,
     };
 
-    if (nombre !== "" && contraseña !== "" && contraseñaConf !== "") {
-      if(contraseña === contraseñaConf){
-        await axios.put(`http://localhost:5000/api/editprofile/${id}`, editUser)
-        .then(() => {
-          setMensaje('Información actualizada con éxito');
-          navigate(`/menu/${id}`);
-        })
-        .catch((error) => {
-          console.error(error);
-          setMensaje('Hubo un error al actualizar la información');
-        });
-      }else{
-        setMensaje("Las contraseñas no coinciden");
+    if (nombre !== '' && contraseña !== '' && contraseñaConf !== '') {
+      if (contraseña === contraseñaConf) {
+        await axios
+          .put(`http://localhost:5000/api/editprofile/${id}`, editUser)
+          .then(() => {
+            setMensaje('Información actualizada con éxito');
+            navigate(`/menu/${id}`);
+          })
+          .catch((error) => {
+            console.error(error);
+            setMensaje('Hubo un error al actualizar la información');
+          });
+      } else {
+        setMensaje('Las contraseñas no coinciden');
       }
     } else {
       setMensaje('Por favor, complete todos los campos');
     }
-
   };
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       <main>
-        <h1>Edit your Information</h1>
+        <h3>Edit your Information</h3>
         <form onSubmit={handleSubmit}>
           <label>
             Nombre:
@@ -68,12 +91,15 @@ const EditProfile = () => {
             Confirmar Contraseña:
             <input type="password" value={contraseñaConf} onChange={handleContraseniaConfChange} />
           </label>
-          <button type="submit">Actualizar</button> <button type="button" onClick={() => navigate(`/menu/${id}`)}>Regresar</button>
+          <button type="submit">Actualizar</button>{' '}
+          <button type="button" onClick={() => navigate(`/menu/${id}`)}>
+            Regresar
+          </button>
         </form>
         <p>{mensaje}</p>
       </main>
     </div>
   );
-}
+};
 
 export default EditProfile;

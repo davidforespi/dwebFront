@@ -1,54 +1,106 @@
-import React from "react";
 import styles from "./styles.module.scss";
 import Navbar from "../Navbar/navbar";
-const AboutUs = () => {
-  return (
-    <div>
-      <section className={styles.section}>
-      <Navbar/>
-      <div>
-      <div className={styles.feature}>
-            <h4>Best food in the west</h4>
-            <p>
-              We are the best restaurant option because we constantly strive
-              to provide the best culinary and service experience to our
-              customers. We have a highly trained team of chefs and customer
-              service personnel who are committed to excellence in everything
-              they do. In addition, we use fresh and high-quality ingredients
-              in all of our preparations to ensure the best taste and
-              nutritional value. Whether you are looking for a romantic dinner
-              for two, a special celebration or simply a delicious meal, we
-              are confident that you will enjoy your experience at our
-              restaurant. Come visit us and discover why we are the best
-              option in town.
-            </p>
-          </div>
-        <div className={styles.features}>
+import Footer from "../Footer/footer";
+import  {useParams, useNavigate, } from 'react-router-dom';
+import React, {useEffect, useState} from "react";
+import axios from "axios";
 
+
+const AboutUs = () => {
+  const [userInput, setUserInput] = useState('');
+
+  const handleInputChange = (event) => {
+    setUserInput(event.target.value);
+  };
+
+  const [name, setName] = useState('');
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/api/user/${id}`)
+      .then(({ data }) => {
+        if (data.nombre) {
+          setName(data.nombre);
+        } else {
+          navigate('/');
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        navigate('/');
+      });
+    });
+
+  
+ 
+
+  const handleSubmit = () => {
+    // Aquí puedes realizar alguna acción con el texto ingresado por el usuario
+    console.log(userInput);
+  };
+
+  return (
+
+    <div className={styles.container}>
+      <Navbar />
+      
+        <div className={styles.container}>
           <div className={styles.feature}>
-            <h4>Quality Ingredients</h4>
+            <h4>La mejor comida del oeste</h4>
             <p>
-              Our dishes are prepared with fresh and high-quality ingredients
-              to ensure the best taste and nutritional value.
+              Somos la mejor opción de restaurante porque nos esforzamos constantemente
+              la mejor experiencia culinaria y de servicio a nuestros
+              clientes. Contamos con un equipo de chefs y personal de atención al cliente
+              personal de servicio al cliente que están comprometidos con la
+              lo que hacen. Además, utilizamos ingredientes frescos y de alta calidad
+              en todas nuestras preparaciones para garantizar el mejor sabor y
+              valor nutricional. Tanto si busca una cena romántica
+              para dos, una celebración especial o simplemente una deliciosa comida, estamos
+              estamos seguros de que disfrutará de su experiencia en nuestro
+              restaurante. Venga a visitarnos y descubra por qué somos la mejor
+              opción en la ciudad.
             </p>
           </div>
-          <div className={styles.feature}>
-            <h4>Exceptional Service</h4>
-            <p>
-              Our staff is committed to providing exceptional service to
-              ensure that our customers have the best experience.
-            </p>
+          <div className={styles.features}>
+
+            <div className={styles.feature}>
+              <h4>Ingredientes de calidad</h4>
+              <p>
+                Nuestros platos se preparan con ingredientes frescos y de alta calidad
+                para garantizar el mejor sabor y valor nutritivo.
+              </p>
+            </div>
+            <div className={styles.feature}>
+              <h4>Servicio excepcional</h4>
+              <p>
+                Nuestro personal se compromete a ofrecer un servicio excepcional para
+                garantizar que nuestros clientes tengan la mejor experiencia.
+              </p>
+            </div>
+            <div className={styles.feature}>
+              <h4>Ambiente acogedor</h4>
+              <p>
+                Nuestro restaurante ofrece un ambiente acogedor que hace que nuestros clientes se sientan como en casa.
+              </p>
+            </div>
+            <div className={styles.feature}>
+              <h4>Tu opinión cuenta</h4>
+              <p>
+                Envía tus felicitaciones, sugerencias o peticiones. Estamos dispuestos a escucharte.
+              </p>
+              <label>
+                <input type="text" value={userInput} onChange={handleInputChange} />
+              </label>
+              <button className={styles.button} onClick={handleSubmit}>Enviar</button>
+            </div>
           </div>
-          <div className={styles.feature}>
-            <h4>Cozy Atmosphere</h4>
-            <p>
-              Our restaurant provides a cozy and welcoming atmosphere that
-              makes our customers feel right at home.
-            </p>
-          </div>
+          <Footer />
         </div>
-      </div>
-    </section>
+      
+      
     </div>
   );
 };
