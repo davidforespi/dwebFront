@@ -5,14 +5,14 @@ import { useNavigate } from "react-router-dom";
 
 import styles from "./styles.module.scss";
 
-const Login =   () => {
+const Login = () => {
   const [inputs, setInputs] = useState({ correo: "", contraseña: "" });
   const [mensaje, setMensaje] = useState();
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  
+
 
   const { correo, contraseña } = inputs;
 
@@ -20,22 +20,29 @@ const Login =   () => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
-  
+
+
+
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (correo !== "" && contraseña !== "" && correo !== "admin@renala.com" && correo !== "admin1@renala.com" && correo !== "cocinero@renala.com" && correo !== "cocinero1@renala.com") {
+
+    if (correo === "" || contraseña === "") {
+      setMensaje("Los campos no pueden ser vacios");
+    } else if (correo !== "" && contraseña !== "" && correo !== "admin@renala.com" && correo !== "admin1@renala.com" && correo !== "cocinero@renala.com" && correo !== "cocinero1@renala.com") {
       const Usuario = {
         correo,
         contraseña,
       };
       setLoading(true);
       await axios
-        .post("http://localhost:5000/api/login", Usuario)
+        .post("http://20.121.138.44:5000/api/login", Usuario)
         .then((res) => {
           const { data } = res;
-          setMensaje(data.mensaje);
-          axios.delete("http://localhost:5000/api/products-emptyCart");
-          navigate(`/inicio/${data?.user.id}`);
+          setMensaje(res.data.mensaje);
+          axios.delete("http://20.121.138.44:5000/api/products-emptyCart");
+          setTimeout(() => {
+            navigate(`/inicio/${data?.user.id}`);
+          }, 1000);
         })
         .catch((error) => {
           console.error(error);
@@ -43,46 +50,46 @@ const Login =   () => {
         });
       setInputs({ correo: "", contraseña: "" });
       setLoading(false);
-    }else if(correo !== "" && contraseña !== ""  &&( correo === "admin@renala.com" || correo === "admin1@renala.com" )){
-      const Usuario ={
+    } else if (correo !== "" && contraseña !== "" && (correo === "admin@renala.com" || correo === "admin1@renala.com")) {
+      const Usuario = {
         correo,
         contraseña,
       };
       setLoading(true);
-      await axios.post("http://localhost:5000/api/adminLogin", Usuario)
-      .then((res) =>{
-        const {data} = res;
-        setMensaje(data.mensaje);
-        navigate(`/admin/${data?.user.id}`);
-      })
-      .catch((error) =>{ 
-        console.log(error);
-        setMensaje("Correo Incorrecto")
-      })
-    }else if(correo !== "" && contraseña !== ""  && (correo === "cocinero@renala.com" || correo === "cocinero1@renala.com" )){
-      const Usuario ={
+      await axios.post("http://20.121.138.44:5000/api/adminLogin", Usuario)
+        .then((res) => {
+          const { data } = res;
+          setMensaje(data.mensaje);
+          navigate(`/admin/${data?.user.id}`);
+        })
+        .catch((error) => {
+          console.log(error);
+          setMensaje("Correo Incorrecto")
+        })
+    } else if (correo !== "" && contraseña !== "" && (correo === "cocinero@renala.com" || correo === "cocinero1@renala.com")) {
+      const Usuario = {
         correo,
         contraseña,
       };
       setLoading(true);
-      await axios.post("http://localhost:5000/api/cocineroLogin", Usuario)
-      .then((res) =>{
-        const {data} = res;
-        setMensaje(data.mensaje);
-        navigate(`/cocina/${data?.user.id}`);
-      })
-      .catch((error) =>{ 
-        console.log(error);
-        setMensaje("Correo Incorrecto")
-      })
+      await axios.post("http://20.121.138.44:5000/api/cocineroLogin", Usuario)
+        .then((res) => {
+          const { data } = res;
+          setMensaje(data.mensaje);
+          navigate(`/cocina/${data?.user.id}`);
+        })
+        .catch((error) => {
+          console.log(error);
+          setMensaje("Correo Incorrecto")
+        })
     }
   };
 
   return (
     <>
       <div className={styles.formContainer}>
-        <h2>Bienvenido a la pagina</h2>
-        <h2>De Inicio de Sesión!</h2>
+        <h2>Bienvenido a Rennala Restaurant</h2>
+        <h2>Inicie Sesión!</h2>
         <form onSubmit={(e) => onSubmit(e)}>
           <div className={styles.inputContainer}>
             <div className={styles.left}>
@@ -93,7 +100,7 @@ const Login =   () => {
                 name="correo"
                 id="correo"
                 type="email"
-                placeholder="Correo..."
+                placeholder="example@example.com"
                 autoComplete="off"
               />
             </div>
@@ -118,7 +125,7 @@ const Login =   () => {
                 name="contraseña"
                 id="contraseña"
                 type="password"
-                placeholder="Contraseña..."
+                placeholder="Ingrese su contraseña"
                 autoComplete="off"
               />
             </div>

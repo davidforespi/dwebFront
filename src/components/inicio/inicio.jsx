@@ -16,7 +16,7 @@ const Inicio = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/user/${id}`)
+      .get(`http://20.121.138.44:5000/api/user/${id}`)
       .then(({ data }) => {
         if (data.nombre) {
           setName(data.nombre);

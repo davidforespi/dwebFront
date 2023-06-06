@@ -33,7 +33,7 @@ const Pay = () => {
   }, []);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/user/${id}`)
+    axios.get(`http://20.121.138.44:5000/api/user/${id}`)
       .then(({ data }) => setName(data.nombre.charAt(0).toUpperCase() + data.nombre.slice(1)))
       .catch((error) => console.error(error));
   }, [id]);
@@ -46,13 +46,13 @@ const Pay = () => {
       price,
     };
 
-    await axios.post(`http://localhost:5000/api/pay/${id}`, fPrice)
+    await axios.post(`http://20.121.138.44:5000/api/pay/${id}`, fPrice)
       .then(() => {
-        axios.delete(`http://localhost:5000/api/pay-delete/${id}`);
-        axios.delete("http://localhost:5000/api/products-emptyCart");
+        axios.delete(`http://20.121.138.44:5000/api/pay-delete/${id}`);
+        axios.delete("http://20.121.138.44:5000/api/products-emptyCart");
 
         setMensaje(
-          'Gracias por comprar en tu restaurante favorito, enviamos un correo con la generación de tu factura y luego la confirmación de tu compra.'
+          'Pedido realizado. En unos momentos llegará el pedido a tu mesa'
         );
 
         setTimeout(() => {
@@ -61,14 +61,14 @@ const Pay = () => {
       })
       .catch((error) => {
         console.error(error);
-        setMensaje('Error al procesar el pago. Inténtalo de nuevo más tarde.');
+        setMensaje('Error al procesar el pedido. Inténtalo de nuevo más tarde.');
       });
   };
 
   return (
     <div className={styles.payContainer}>
       <form onSubmit={handleSubmit}>
-        <h1 className={styles.payTitle}>Factura</h1>
+        <h1 className={styles.payTitle}>Confirma tu pedido</h1>
         <div className={styles.factura}>
           <div className={styles.facturaItem}>
             <span className={styles.facturaLabel}>ID de Usuario:</span>
@@ -87,9 +87,9 @@ const Pay = () => {
             <span className={styles.facturaValue}>${price}</span>
           </div>
         </div>
-        <button className={styles.payButton} type="submit">Pagar</button> <button className={styles.payButton} onClick={() => navigate(`/menu/${id}`)}>Regresar</button>
+        <button className={styles.payButton} type="submit">Pedir</button> <button className={styles.payButton} onClick={() => navigate(`/menu/${id}`)}>Regresar</button>
       </form>
-      <div className={styles.payMessage}>{mensaje}</div>
+      <div className={styles.toast}>{mensaje}</div>
     </div>
   );
 };

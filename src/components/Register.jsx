@@ -12,7 +12,6 @@ const Register = () => {
   });
   const [mensaje, setMensaje] = useState();
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
 
   const { nombre, contraseña, correo } = inputs;
@@ -23,32 +22,28 @@ const Register = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (nombre !== "" && contraseña !== "" && correo !== "") {
-      const Usuario = {
+
+    if(nombre === "" || contraseña === "" || correo === ""){
+      setMensaje("No pueden haber campos vacios");
+    }else if (nombre !== "" && contraseña !== "" && correo !== "") {
+      const usuario = {
         nombre,
         correo,
         contraseña,
       };
       setLoading(true);
-      await axios
-        .post("http://localhost:5000/api/register", Usuario)
-        .then((res) => {
-          const { data } = res;
-          setMensaje(data.mensaje);
-          setInputs({ nombre: "", contraseña: "", correo: "" });
-          setTimeout(() => {
-            setMensaje("");
-            navigate("/");
-          }, 1500);
-        })
-        .catch((error) => {
-          console.error(error);
-          setMensaje("Hubo un error");
-          setTimeout(() => {
-            setMensaje("");
-          }, 1500);
-        });
-
+      try {
+        const response = await axios.post("http://20.121.138.44:5000/api/register", usuario);
+        
+        setInputs({ nombre: "", contraseña: "", correo: "" });
+        setMensaje(response.data.message);
+        setTimeout(() => {
+          navigate("/register");
+        }, 1500);
+      } catch (error) {
+        console.error(error);
+        setMensaje(error.response.data.message);
+      }
       setLoading(false);
     }
   };
@@ -56,8 +51,8 @@ const Register = () => {
   return (
     <>
       <div className={styles.formContainer}>
-        <h3>Bienvenido a la pagina</h3>
-        <h2>De Registro!</h2>
+        <h3>Rennala Restaurant</h3>
+        <h2>Formulario de registro!</h2>
         <form onSubmit={(e) => onSubmit(e)}>
           <div className={styles.inputContainer}>
             <div className={styles.left}>
@@ -68,7 +63,7 @@ const Register = () => {
                 name="nombre"
                 id="nombre"
                 type="text"
-                placeholder="Nombre..."
+                placeholder="Ingrese su nombre"
                 autoComplete="off"
               />
             </div>
@@ -93,7 +88,7 @@ const Register = () => {
                 name="correo"
                 id="correo"
                 type="email"
-                placeholder="Correo..."
+                placeholder="example@example.com"
                 autoComplete="off"
               />
             </div>
@@ -118,7 +113,7 @@ const Register = () => {
                 name="contraseña"
                 id="contraseña"
                 type="password"
-                placeholder="Contraseña..."
+                placeholder="Ingrese su contraseña"
                 autoComplete="off"
               />
             </div>

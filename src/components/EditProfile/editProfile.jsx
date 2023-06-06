@@ -16,7 +16,7 @@ const EditProfile = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/user/${id}`)
+      .get(`http://20.121.138.44:5000/api/user/${id}`)
       .then(({ data }) => {
         if (data.nombre) {
           setName(data.nombre);
@@ -57,10 +57,12 @@ const EditProfile = () => {
     if (nombre !== '' && contraseña !== '' && contraseñaConf !== '') {
       if (contraseña === contraseñaConf) {
         await axios
-          .put(`http://localhost:5000/api/editprofile/${id}`, editUser)
+          .put(`http://20.121.138.44:5000/api/editprofile/${id}`, editUser)
           .then(() => {
             setMensaje('Información actualizada con éxito');
-            navigate(`/menu/${id}`);
+            setTimeout(() => {
+              navigate(`/menu/${id}`);
+            }, 1000);
           })
           .catch((error) => {
             console.error(error);
@@ -77,19 +79,19 @@ const EditProfile = () => {
   return (
     <div className={styles.container}>
       <main>
-        <h3>Edit your Information</h3>
+        <h3>Edita tu perfil</h3>
         <form onSubmit={handleSubmit}>
           <label>
             Nombre:
-            <input type="text" value={nombre} onChange={handleNombreChange} />
+            <input placeholder='Ingresa tu nombre' type="text" value={nombre} onChange={handleNombreChange} />
           </label>
           <label>
             Contraseña:
-            <input type="password" value={contraseña} onChange={handleContraseniaChange} />
+            <input type="password" placeholder='Ingresa tu contraseña' value={contraseña} onChange={handleContraseniaChange} />
           </label>
           <label>
             Confirmar Contraseña:
-            <input type="password" value={contraseñaConf} onChange={handleContraseniaConfChange} />
+            <input type="password" placeholder="Confirma tu contraseña" value={contraseñaConf} onChange={handleContraseniaConfChange} />
           </label>
           <button type="submit">Actualizar</button>{' '}
           <button type="button" onClick={() => navigate(`/menu/${id}`)}>

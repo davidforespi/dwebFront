@@ -82,7 +82,7 @@ const Cart = () => {
           <h2>Tu carrito</h2>
 
           {cartItems.length === 0 ? (
-            <p className={styles.cartVacio}>Tu carrito esta vacio</p>
+            <p className={styles.cartVacio}>Tu carrito esta vacío</p>
           ) : (
             <div className={styles.productsContainer}>
               {cartItems.map((item, i) => (
@@ -95,10 +95,10 @@ const Cart = () => {
           <h2 className={styles.total}>
             Total: ${total}
             {total === 0 ? (
-               <div className={styles.buttons}><button>Agrega algun producto</button> </div> 
+               <div className={styles.buttons}><button>Agrega un producto</button> </div> 
             ) : (
               <div className={styles.buttons}>
-                <button onClick={() => navigate(`/pay/${id}?total=${total}`)}>Realizar pago aquí</button>
+                <button onClick={() => navigate(`/pay/${id}?total=${total}`)}>Realizar pedido</button>
               </div>
             )}
           </h2>

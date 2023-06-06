@@ -12,6 +12,7 @@ const AboutUs = () => {
   const handleInputChange = (event) => {
     setUserInput(event.target.value);
   };
+  const [mensaje, setMensaje] = useState('');
 
   const [name, setName] = useState('');
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const AboutUs = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/user/${id}`)
+      .get(`http://20.121.138.44:5000/api/user/${id}`)
       .then(({ data }) => {
         if (data.nombre) {
           setName(data.nombre);
@@ -37,10 +38,24 @@ const AboutUs = () => {
   
  
 
-  const handleSubmit = () => {
-    // Aquí puedes realizar alguna acción con el texto ingresado por el usuario
-    console.log(userInput);
-  };
+    const handleSubmit = () => {
+      const comentario = { comentario: userInput };
+      if(userInput !== ""){
+        axios.post(`http://20.121.138.44:5000/api/comment/${id}`, comentario)
+        .then(() => {
+          setMensaje("Reseña enviada correctamente");
+          setUserInput("");
+        })
+        .catch((error) => {
+          console.error(error);
+          setMensaje('La reseña no se pudo enviar');
+        });
+      }else{
+         setMensaje("No puede estar vacio el comentario");
+      }
+
+    };
+    
 
   return (
 
@@ -96,6 +111,7 @@ const AboutUs = () => {
               </label>
               <button className={styles.button} onClick={handleSubmit}>Enviar</button>
             </div>
+              {mensaje && <div className={styles.toast}>{mensaje}</div>}
           </div>
           <Footer />
         </div>

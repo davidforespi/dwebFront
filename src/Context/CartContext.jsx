@@ -15,13 +15,13 @@ export const CartProvider = ({ children }) => {
  
   const getProducts = async () => {
     await axios
-      .get("http://localhost:5000/api/products")
+      .get("http://20.121.138.44:5000/api/products")
       .then(({ data }) => setProducts(data.products));
   };
 
 
   const getUserCart = async () => {
-    return await axios.get(`http://localhost:5000/api/products-getUserCart/${userId}`)
+    return await axios.get(`http://20.121.138.44:5000/api/products-getUserCart/${userId}`)
     .then(({data}) => setCartItems(data.userCart))
     .catch((error) => console.error(error));
 
@@ -41,7 +41,7 @@ export const CartProvider = ({ children }) => {
     const { name, img, price } = product;
 
 
-    await axios.post(`http://localhost:5000/api/products-addCart/${userId}`, {name, img, price});
+    await axios.post(`http://20.121.138.44:5000/api/products-addCart/${userId}`, {name, img, price});
 
     getProducts();
     getUserCart();
@@ -53,11 +53,11 @@ export const CartProvider = ({ children }) => {
   const editItemToCart = async (id, query, amount) => {
     if (query === "del" && amount === 1) {
       await axios
-        .delete(`http://localhost:5000/api/products-cart/${id}`)
+        .delete(`http://20.121.138.44:5000/api/products-cart/${id}`)
         .then(({ data }) => console.log(data));
     } else {
       await axios
-        .put(`http://localhost:5000/api/products-cart/${id}?query=${query}`, {
+        .put(`http://20.121.138.44:5000/api/products-cart/${id}?query=${query}`, {
           amount,
         })
         .then(({ data }) => console.log(data));
