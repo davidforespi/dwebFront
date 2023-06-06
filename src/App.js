@@ -9,6 +9,7 @@ import EditProfile from "./components/EditProfile/editProfile";
 import Pay from "./components/Pay/pay";
 import Admin from "./components/loginAdmin/admin";
 import Inicio from './components/inicio/inicio';
+import Cocina from './components/Cocina/cocina';
 
 const  App = () => {
   
@@ -27,6 +28,7 @@ const  App = () => {
       <Route path="/pay/:id" element={<Pay />} />
       <Route path="/admin/:id" element={<Admin />} />
       <Route path="/inicio/:id" element={<Inicio/>} />
+      <Route path="/cocina/:id" element={<Cocina/>} />
   
     </Routes>
 

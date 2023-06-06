@@ -2,20 +2,16 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './styles.module.scss';
 import { useNavigate, useParams } from 'react-router-dom';
-  
 
-
-const AdminPanel = () => {
-
+const Cocina = () => {
   const [invoices, setInvoices] = useState([]);
   const [name, setName] = useState();
   const { id } = useParams();
   const navigate = useNavigate();
 
-
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/admin/${id}`)
+      .get(`http://localhost:5000/api/cocinero/${id}`)
       .then(({ data }) => {
         if (data.nombre) {
           setName(data.nombre);
@@ -46,7 +42,7 @@ const AdminPanel = () => {
 
   const handleStatusChange = async (invoiceId, newStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/admin-payment/${invoiceId}`, { state: newStatus });
+      await axios.put(`http://localhost:5000/api/cocinero-payment/${invoiceId}`, { state: newStatus });
       fetchInvoices();
     } catch (error) {
       console.error(error);
@@ -88,8 +84,8 @@ const AdminPanel = () => {
                   value={invoice.state}
                   onChange={(e) => handleStatusChange(invoice._id, e.target.value)}
                 >
-                  <option value="Por pagar">Por Pagar</option>
-                  <option value="Pagado">Pagado</option>
+                  <option value="En cocina">En cocina</option>
+                  <option value="Por pagar">Por pagar</option>
                 </select>
               </td>
             </tr>
@@ -100,4 +96,4 @@ const AdminPanel = () => {
   );
 };
 
-export default AdminPanel;
+export default Cocina;

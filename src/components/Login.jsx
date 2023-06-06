@@ -23,7 +23,7 @@ const Login =   () => {
   
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (correo !== "" && contraseña !== "" && correo !== "admin@renala.com" && correo !== "admin1@renala.com") {
+    if (correo !== "" && contraseña !== "" && correo !== "admin@renala.com" && correo !== "admin1@renala.com" && correo !== "cocinero@renala.com" && correo !== "cocinero1@renala.com") {
       const Usuario = {
         correo,
         contraseña,
@@ -43,7 +43,7 @@ const Login =   () => {
         });
       setInputs({ correo: "", contraseña: "" });
       setLoading(false);
-    }else if(correo !== "" && contraseña !== ""  || correo === "admin@renala.com" || correo !== "admin1@renala.com" ){
+    }else if(correo !== "" && contraseña !== ""  &&( correo === "admin@renala.com" || correo === "admin1@renala.com" )){
       const Usuario ={
         correo,
         contraseña,
@@ -54,6 +54,22 @@ const Login =   () => {
         const {data} = res;
         setMensaje(data.mensaje);
         navigate(`/admin/${data?.user.id}`);
+      })
+      .catch((error) =>{ 
+        console.log(error);
+        setMensaje("Correo Incorrecto")
+      })
+    }else if(correo !== "" && contraseña !== ""  && (correo === "cocinero@renala.com" || correo === "cocinero1@renala.com" )){
+      const Usuario ={
+        correo,
+        contraseña,
+      };
+      setLoading(true);
+      await axios.post("http://localhost:5000/api/cocineroLogin", Usuario)
+      .then((res) =>{
+        const {data} = res;
+        setMensaje(data.mensaje);
+        navigate(`/cocina/${data?.user.id}`);
       })
       .catch((error) =>{ 
         console.log(error);
