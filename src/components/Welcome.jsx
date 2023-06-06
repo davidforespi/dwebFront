@@ -12,7 +12,7 @@ const Welcome = () => {
   const {id} = useParams();
 
  useEffect(() =>{
-  axios.get(`http://localhost:5000/api/user/${id}`)
+  axios.get(`http://20.121.138.44:5000/api/user/${id}`)
   .then(({data}) => setName(data.nombre))
   .catch((error) => console.error(error));
   

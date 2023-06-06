@@ -54,7 +54,7 @@ const AdminPanel = () => {
 
   const handleStatusChange = async (invoiceId, newStatus) => {
     try {
-      await axios.put(`http://20.121.138.44:5000/api/admin-payment/${invoiceId}`, { state: newStatus });
+      await axios.put(`http://20.121.138.44:5000/api/admin-payment/${id}/${invoiceId}`, { state: newStatus });
       fetchInvoices();
 
       if (newStatus === 'Por pagar') {
